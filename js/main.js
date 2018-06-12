@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   var entityInput = document.getElementById('entity-input'),
+      entityInputContainer = document.getElementById('entity-input-character'),
       currentContainer = document.getElementById('current'),
       hiddenCharacter = document.getElementById('hidden-character'),
 
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
       outputJs = document.getElementById('js-value');
 
 
-  entityInput.addEventListener('keyup', function () {
+  entityInput.addEventListener('input', function () {
       hiddenCharacter.innerHTML = this.value;
 
       if (!(regSearchWrongNum.test(this.value)) && regSearchNum.test(this.value)) {
@@ -25,6 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   });
 
+  entityInputContainer.addEventListener('input', function () {
+    makeOutput.call(this, this.value.charCodeAt(0));
+    
+    if (this.value.length === 0) {
+      this.value = "";
+    }
+  });
 
   function toHex(value) {
     return Number(value).toString(16).toUpperCase();
