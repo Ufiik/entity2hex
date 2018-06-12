@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+  <link rel="stylesheet" href="css/main.min.css">
+</head>
+<body>
+
+  <div class="wrapper">
+    <h1 class="converter-caption">entity2hex</h1>
+    <div class="container">
+      <div class="current" id="current"></div>
+      <div class="entity-input-container">
+        <input autofocus type="text" class="entity-input" id="entity-input" placeholder="Числовое обозначение HTML символа &#40;Например: &amp;#224&#41;">
+        <span class="hidden" id="hidden-character"></span>
+      </div>
+      <div class="output-container">
+        <div class="css-value-container">
+          <input type="text" id="css-value">
+        </div>
+        <div class="js-value-container">
+          <input type="text" id="js-value">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
