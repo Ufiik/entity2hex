@@ -22,10 +22,22 @@
       </div>
       <div class="output-container">
         <div class="css-value-container">
-          <input type="text" id="css-value">
+          <span>CSS Value↓</span>
+          <div class="output-input-container">
+            <input type="text" id="css-value">
+            <div class="copy-button-container">
+              <button type="button" data-clipboard-target="#css-value" id="copy-css" class="copy-css"></button>
+            </div>
+          </div>
         </div>
         <div class="js-value-container">
-          <input type="text" id="js-value">
+          <span>JS Value↓</span>
+          <div class="output-input-container">
+            <input type="text" id="js-value">
+            <div class="copy-button-container">
+              <button type="button" data-clipboard-target="#js-value" id="copy-js" class="copy-js"></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
       entityInputContainer = document.getElementById('entity-input-character'),
       currentContainer = document.getElementById('current'),
       hiddenCharacter = document.getElementById('hidden-character'),
+      outputContainer = document.getElementsByClassName('output-container')[0],
 
       regSearchNum = /&#\d/,
       regSearchWord = /&\w/,
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
       outputCss = document.getElementById('css-value'),
       outputJs = document.getElementById('js-value');
 
-
+// Для обработки числового обозначения и мнемоники
   entityInput.addEventListener('input', function () {
       hiddenCharacter.innerHTML = this.value;
 
@@ -26,13 +27,23 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   });
 
+// Для обработки символа
   entityInputContainer.addEventListener('input', function () {
     makeOutput.call(this, this.value.charCodeAt(0));
-    
+
     if (this.value.length === 0) {
-      this.value = "";
+      outputCss.value = outputJs.value = "";
     }
   });
+
+// Для отмены выделения при коппировании в буффер
+  var copyCssBtn = new ClipboardJS("#copy-css");
+  var copyJsBtn = new ClipboardJS("#copy-js");
+
+
+  addDeselect([copyCssBtn, copyJsBtn]);
+
+// Вспомогательные функции
 
   function toHex(value) {
     return Number(value).toString(16).toUpperCase();
@@ -58,8 +69,28 @@ document.addEventListener('DOMContentLoaded', function () {
     outputJs.value = addLeftCharacters(hexValue, "\\u", 6);
   }
 
-  console.log("P".charCodeAt(0));
+  function deselectAll() {
+    var element = document.activeElement;
 
-  new ClipboardJS("#ex");
+    if (element && /INPUT|TEXTAREA/i.test(element.tagName)) {
+      if ('selectionStart' in element) {
+        element.selectionEnd = element.selectionStart;
+      }
+    element.blur();
+    }
 
+    if (window.getSelection) { // All browsers, except IE <=8
+      window.getSelection().removeAllRanges();
+    } else if (document.selection) { // IE <=8
+      document.selection.empty();
+    }
+  }
+
+  function addDeselect(arr) {
+    arr.forEach(function (item) {
+      item.on('success', function () {
+        deselectAll();
+      });
+    });
+  }
 });
