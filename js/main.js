@@ -44,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function () {
   addDeselect([copyCssBtn, copyJsBtn]);
 
 // Вспомогательные функции
-
   function toHex(value) {
     return Number(value).toString(16).toUpperCase();
   }
