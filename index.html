@@ -7,6 +7,7 @@
   <title>entity2hex</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
   <link rel="stylesheet" href="css/main.min.css">
+   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
 
@@ -15,7 +16,7 @@
     <div class="container">
       <div class="current" id="current"></div>
       <div class="entity-input-container">
-        <input autofocus type="text" class="entity-input" id="entity-input" placeholder="for example: &amp;#224, &amp;amp">
+        <input autofocus type="text" class="entity-input" id="entity-input" placeholder="for example: &amp;#224; &amp;amp; (the semicolon must be)">
         <span class="or-text">or</span>
         <input autofocus type="text" class="entity-input" id="entity-input-character" placeholder="just a symbol(s)">
         <span class="hidden" id="hidden-character"></span>
@@ -24,18 +25,22 @@
         <div class="css-value-container">
           <span>CSS Value↓</span>
           <div class="output-input-container">
-            <input type="text" id="css-value">
+            <textarea readonly type="text" id="css-value"></textarea>
             <div class="copy-button-container">
               <button type="button" data-clipboard-target="#css-value" id="copy-css" class="copy-css"></button>
+              <div class="alert-success">Copied!</div>
+              <div class="alert-error">Error!</div>
             </div>
           </div>
         </div>
         <div class="js-value-container">
           <span>JS Value↓</span>
           <div class="output-input-container">
-            <input type="text" id="js-value">
+            <textarea readonly type="text" id="js-value"></textarea>
             <div class="copy-button-container">
               <button type="button" data-clipboard-target="#js-value" id="copy-js" class="copy-js"></button>
+              <div class="alert-success">Copied!</div>
+              <div class="alert-error">Error!</div>
             </div>
           </div>
         </div>

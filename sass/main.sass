@@ -13,7 +13,7 @@ html, body
   height: 100%
 
 .wrapper
-  height: 100%
+  min-height: 100%
   background: #eee
   font-family: 'Rubik', sans-serif
   color: #4A4A4A
@@ -25,7 +25,7 @@ html, body
   align-items: center
 
 .container
-  margin-top: 70px
+  margin: 70px 0
   border-radius: 4px
   text-align: center
   background: #fff
@@ -34,7 +34,7 @@ html, body
   -webkit-box-shadow: 3px 4px 15px 0px rgba(0,0,0,0.3)
   -moz-box-shadow: 3px 4px 15px 0px rgba(0,0,0,0.3)
   box-shadow: 3px 4px 15px 0px rgba(0,0,0,0.3)
-  input
+  input, textarea
     border: 1px solid #999999
     border-radius: 4px
     color: #4A4A4A
@@ -45,9 +45,9 @@ html, body
   color: #fff
   padding: 10px
   width: 100%
-  -webkit-box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.5)
-  -moz-box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.5)
-  box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.5)
+  -webkit-box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.35)
+  -moz-box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.35)
+  box-shadow: 0px 2px 15px 0px rgba(0,0,0,0.35)
 
 .current
   font-size: 60px
@@ -72,11 +72,14 @@ html, body
 
 .output-input-container
   position: relative
-  width: 50%
+  max-width: 500px
+  min-height: 75px
   margin: 20px auto 0 auto
-  input
+  textarea
+    min-height: 100%
     width: 100%
-    padding: 10px 35px 10px 10px
+    padding: 10px 60px 10px 10px
+    resize: none
 
 .copy-button-container
   transition: none
@@ -89,11 +92,10 @@ html, body
   background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 47%, rgba(237,237,237,1) 100%)
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=0 )
   position: absolute
-  right: 1px
+  right: 25px
   top: 1px
-  height: calc(100% - 2px)
+  height: 40px
   width: 25px
-  border-radius: 0 4px 4px 0
   &:active
     -webkit-box-shadow: inset 1px -4px 27px -11px rgba(0,0,0,0.75)
     -moz-box-shadow: inset 1px -4px 27px -11px rgba(0,0,0,0.75)
@@ -109,6 +111,18 @@ html, body
   cursor: pointer
   padding: 5px
   z-index: 999
+
+.alert-success, .alert-error
+  transition: all ease 100ms
+  position: absolute
+  left: -16px
+  bottom: -8px
+  font-size: 11px
+  opacity: 0
+
+.active
+  opacity: 1
+  bottom: -14px
 
 .hidden
   display: none

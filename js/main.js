@@ -10,26 +10,46 @@ document.addEventListener('DOMContentLoaded', function () {
       regSearchWord = /&\w/,
       regSearchWrongNum = /^&#([0-9]|[1-2][\d]|3[0-2])$/,
       regGetAllNum = /\d+/g,
+      regGetAllMnemonic = /&.+;/g,
+      regGetAllNumericValues = /&#.+;/g,
 
       outputCss = document.getElementById('css-value'),
       outputJs = document.getElementById('js-value');
 
+
 // Для обработки числового обозначения и мнемоники
   entityInput.addEventListener('input', function () {
-      hiddenCharacter.innerHTML = this.value;
 
+      // Проверка в случае числового значения
       if (!(regSearchWrongNum.test(this.value)) && regSearchNum.test(this.value)) {
-        makeOutput.call(this, this.value.match(regGetAllNum)[0]);
+        hiddenCharacter.innerHTML = this.value.match(regGetAllNumericValues)[0].replace(/\s+/g, '');
+
+        makeOutput.call(this, this.value.match(regGetAllNum));
       }
 
-      if (regSearchWord.test(this.value) && hiddenCharacter.textContent.length === 1) {
-        makeOutput.call(this, hiddenCharacter.textContent.charCodeAt(0));
+      // Проверка в случае мнемоники
+      if (regSearchWord.test(this.value)) {
+        hiddenCharacter.innerHTML = this.value.match(regGetAllMnemonic)[0].replace(/\s+/g, '');
+
+        var charCodes = [];
+
+        for (var i = 0; i < hiddenCharacter.textContent.length; i++) {
+          charCodes.push(hiddenCharacter.textContent.charCodeAt(i));
+        }
+
+      makeOutput.call(this, charCodes);
       }
   });
 
 // Для обработки символа
   entityInputContainer.addEventListener('input', function () {
-    makeOutput.call(this, this.value.charCodeAt(0));
+    var charCodes = [];
+
+    for (var i = 0; i < this.value.length; i++) {
+      charCodes.push(this.value.charCodeAt(i));
+    }
+
+    makeOutput.call(this, charCodes);
 
     if (this.value.length === 0) {
       outputCss.value = outputJs.value = "";
@@ -43,7 +63,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
   addDeselect([copyCssBtn, copyJsBtn]);
 
+
+// Alerts
+      var copyCss = document.getElementById('copy-css'),
+          copyJs = document.getElementById('copy-js');
+
+      copyCssBtn.on('success', function () {
+        copyCss.parentElement.getElementsByClassName('alert-success')[0].classList.toggle('active');
+
+        setTimeout(function () {
+          copyCss.parentElement.getElementsByClassName('alert-success')[0].classList.toggle('active');
+        },2000);
+      });
+
+      copyJsBtn.on('success', function () {
+        copyJs.parentElement.getElementsByClassName('alert-success')[0].classList.toggle('active');
+
+        setTimeout(function () {
+          copyJs.parentElement.getElementsByClassName('alert-success')[0].classList.toggle('active');
+        },2000);
+      });
+
+
+
 // Вспомогательные функции
+
   function toHex(value) {
     return Number(value).toString(16).toUpperCase();
   }
@@ -59,13 +103,30 @@ document.addEventListener('DOMContentLoaded', function () {
     return str + hex;
   }
 
-  function makeOutput(value) {
-    var hexValue = toHex(value);
+  function makeOutput(arr) {
+    var hiddenTextLen = hiddenCharacter.textContent.length;
 
-    currentContainer.textContent = hiddenCharacter.textContent;
+    if (hiddenTextLen === 1) {
+      currentContainer.textContent = hiddenCharacter.textContent[0];
+    } else {
+      currentContainer.textContent = hiddenCharacter.textContent[hiddenTextLen - 1];
+    }
 
-    outputCss.value = addLeftCharacters(hexValue, "\\", 5);
-    outputJs.value = addLeftCharacters(hexValue, "\\u", 6);
+    var cssValue, jsValue;
+    cssValue = jsValue = "";
+
+    arr.forEach(function (item) {
+      var hexValue = toHex(item);
+
+      cssValue += addLeftCharacters(hexValue, "\\", 5);
+      jsValue += addLeftCharacters(hexValue, "\\u", 6);
+    });
+
+    autosize(outputCss);
+    autosize(outputJs);
+
+    outputCss.value = cssValue;
+    outputJs.value = jsValue;
   }
 
   function deselectAll() {
@@ -92,4 +153,15 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   }
+
+  function autosize(element){
+    var el = element;
+    setTimeout(function(){
+      el.style.cssText = 'height:auto; padding:0';
+      // for box-sizing other than "content-box" use:
+      // el.style.cssText = '-moz-box-sizing:content-box';
+      el.style.cssText = 'height:' + el.scrollHeight + 'px';
+    },0);
+  }
+
 });
